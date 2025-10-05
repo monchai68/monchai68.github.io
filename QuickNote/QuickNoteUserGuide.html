@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="QuickNote User Manual - Complete guide for using QuickNote note-taking app">
+    <meta name="author" content="QuickNote Team">
+    <title>QuickNote User Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #5E35B1;
+            --primary-dark: #4527A0;
+            --accent-color: #7E57C2;
+            --text-color: #212121;
+            --text-secondary: #757575;
+            --bg-color: #FAFAFA;
+            --card-bg: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header .version {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: sticky;
+            top: 100px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            z-index: 99;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .nav::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .nav a {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+            background: rgba(94, 53, 177, 0.1);
+        }
+
+        .nav a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+            background: rgba(94, 53, 177, 0.1);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar TOC */
+        .sidebar {
+            position: sticky;
+            top: 160px;
+            height: fit-content;
+            max-height: calc(100vh - 180px);
+            overflow-y: auto;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.25rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Content */
+        .content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            min-height: 500px;
+        }
+
+        .content h2 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 1.8rem;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: var(--primary-dark);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
+        }
+
+        .content h4 {
+            color: var(--text-color);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .content ul, .content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content code {
+            background: #F5F5F5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #D32F2F;
+        }
+
+        .content pre {
+            background: #F5F5F5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .content table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .content table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .content table tr:hover {
+            background: rgba(94, 53, 177, 0.05);
+        }
+
+        /* Info Boxes */
+        .info-box {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            border-left: 4px solid;
+        }
+
+        .info-box.note {
+            background: #E3F2FD;
+            border-color: var(--info-color);
+        }
+
+        .info-box.warning {
+            background: #FFF3E0;
+            border-color: var(--warning-color);
+        }
+
+        .info-box.success {
+            background: #E8F5E9;
+            border-color: var(--success-color);
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Search Box */
+        .search-box {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-box::after {
+            content: '🔍';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+        }
+
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+            }
+
+            .nav-container {
+                top: 80px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .content h2 {
+                font-size: 1.5rem;
+            }
+
+            .content h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Highlight search results */
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>📝 QuickNote User Manual</h1>
+        <p class="version">Version 1.1.0 | Last Updated: October 2025</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav class="nav" id="mainNav">
+            <a href="#getting-started">Getting Started</a>
+            <a href="#creating-notes">Creating Notes</a>
+            <a href="#rich-text-editor">Rich Text Editor</a>
+            <a href="#categories">Categories</a>
+            <a href="#search-filter">Search & Filter</a>
+            <a href="#favorites">Favorites</a>
+            <a href="#backup-restore">Backup & Restore</a>
+            <a href="#sharing">Sharing Notes</a>
+            <a href="#settings">Settings</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar TOC -->
+        <aside class="sidebar">
+            <h3>📑 Table of Contents</h3>
+            <ul id="tocList">
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#creating-notes">Creating & Managing Notes</a></li>
+                <li><a href="#rich-text-editor">Rich Text Editor</a></li>
+                <li><a href="#categories">Categories & Organization</a></li>
+                <li><a href="#search-filter">Search and Filter</a></li>
+                <li><a href="#favorites">Favorites</a></li>
+                <li><a href="#backup-restore">Backup and Restore</a></li>
+                <li><a href="#sharing">Sharing Notes</a></li>
+                <li><a href="#settings">Settings & Customization</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#privacy">Privacy & Security</a></li>
+                <li><a href="#tips">Tips and Tricks</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Search Box -->
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search manual...">
+            </div>
+
+            <section id="intro">
+                <p><strong>Welcome to QuickNote!</strong> This comprehensive guide will help you master all features of the app, from basic note-taking to advanced rich text formatting.</p>
+            </section>
+
+            <section id="getting-started">
+                <h2>🚀 Getting Started</h2>
+                
+                <h3>Installation</h3>
+                <ol>
+                    <li>Download <strong>QuickNote</strong> from the Google Play Store</li>
+                    <li>Open the app to see the welcome screen with sample notes</li>
+                    <li>Grant necessary permissions when prompted (storage for backup/restore)</li>
+                </ol>
+
+                <h3>First Launch</h3>
+                <ul>
+                    <li>The app includes sample notes in different languages to demonstrate features</li>
+                    <li>You'll see three default categories: <strong>Personal</strong>, <strong>Work</strong>, and <strong>Languages</strong></li>
+                    <li>The <strong>All</strong> category shows notes from all categories</li>
+                </ul>
+
+                <h3>Main Interface Overview</h3>
+                <ul>
+                    <li><strong>App Bar</strong>: Shows current category, search icon, and menu</li>
+                    <li><strong>Notes List</strong>: Displays all your notes in the selected category</li>
+                    <li><strong>Floating Action Button (+)</strong>: Creates a new note</li>
+                    <li><strong>Bottom Navigation</strong>: Quick access to categories and settings</li>
+                </ul>
+            </section>
+
+            <section id="creating-notes">
+                <h2>✏️ Creating and Managing Notes</h2>
+                
+                <h3>Creating a New Note</h3>
+                <ol>
+                    <li><strong>Start a New Note</strong>
+                        <ul>
+                            <li>Tap the <strong>+</strong> (Floating Action Button) at the bottom-right corner</li>
+                            <li>Or tap <strong>Menu</strong> → <strong>New Note</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Add Content</strong>
+                        <ul>
+                            <li>Enter your note title in the title field</li>
+                            <li>Type your content in the editor area</li>
+                            <li>The note auto-saves as you type</li>
+                        </ul>
+                    </li>
+                    <li><strong>Save Options</strong>
+                        <ul>
+                            <li>Notes are saved automatically while editing</li>
+                            <li>Tap the <strong>←</strong> (back button) to return to the notes list</li>
+                            <li>Your changes are preserved instantly</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>Editing Existing Notes</h3>
+                <ol>
+                    <li><strong>Open a Note</strong> - Tap any note in the list to open the editor</li>
+                    <li><strong>Edit Content</strong> - Modify the title or content as needed. Changes save automatically</li>
+                    <li><strong>Exit Editor</strong> - Tap <strong>←</strong> (back button) to return to the list</li>
+                </ol>
+
+                <h3>Deleting Notes</h3>
+                <div class="info-box warning">
+                    <strong>⚠️ Warning:</strong> Deleted notes cannot be recovered unless you have a backup!
+                </div>
+                <ol>
+                    <li><strong>Delete from List</strong>
+                        <ul>
+                            <li>Long-press a note in the list</li>
+                            <li>Tap the <strong>Delete</strong> icon that appears</li>
+                            <li>Confirm deletion in the dialog</li>
+                        </ul>
+                    </li>
+                    <li><strong>Delete from Editor</strong>
+                        <ul>
+                            <li>Open the note</li>
+                            <li>Tap <strong>Menu</strong> (⋮) → <strong>Delete</strong></li>
+                            <li>Confirm to permanently remove the note</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>Note Colors</h3>
+                <p>QuickNote supports both automatic category-based colors and custom note colors.</p>
+
+                <h4>Automatic Category Color (New! ✨)</h4>
+                <ol>
+                    <li><strong>Default Behavior</strong>
+                        <ul>
+                            <li>New notes automatically inherit their category's color</li>
+                            <li>Each category has a unique pastel color</li>
+                            <li>Makes notes visually organized by category</li>
+                        </ul>
+                    </li>
+                    <li><strong>How It Works</strong>
+                        <ul>
+                            <li>Create a note in <strong>Personal</strong> category → Gets blue color</li>
+                            <li>Create a note in <strong>Work</strong> category → Gets green color</li>
+                            <li>Create a note in custom category → Gets that category's color</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Custom Note Color</h4>
+                <ol>
+                    <li><strong>Set Custom Color</strong>
+                        <ul>
+                            <li>Open a note in the editor</li>
+                            <li>Tap the <strong>Color Palette</strong> icon in the app bar</li>
+                            <li>Select from predefined colors</li>
+                            <li>The note card will display in your chosen color</li>
+                            <li>Custom color <strong>overrides</strong> category color</li>
+                        </ul>
+                    </li>
+                    <li><strong>Reset to Category Color</strong>
+                        <ul>
+                            <li>Open the note</li>
+                            <li>Tap <strong>Color Palette</strong> → <strong>Reset to Category Color</strong></li>
+                            <li>Note returns to its category's default color</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Changing Category Colors</h4>
+                <ol>
+                    <li><strong>Edit Category</strong>
+                        <ul>
+                            <li>Go to <strong>Manage Categories</strong></li>
+                            <li>Tap on a category to edit</li>
+                            <li>Choose a new color from the palette</li>
+                        </ul>
+                    </li>
+                    <li><strong>Automatic Note Updates</strong>
+                        <ul>
+                            <li>All notes using that category color will update automatically</li>
+                            <li>Notes with custom colors remain unchanged</li>
+                            <li>Only affects notes that haven't been manually colored</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Note Color Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>New note created</td>
+                            <td>Gets category color automatically</td>
+                        </tr>
+                        <tr>
+                            <td>Category color changed</td>
+                            <td>Notes update if using category color</td>
+                        </tr>
+                        <tr>
+                            <td>Custom color applied</td>
+                            <td>Overrides category color (permanent)</td>
+                        </tr>
+                        <tr>
+                            <td>Custom color reset</td>
+                            <td>Returns to category color</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="rich-text-editor">
+                <h2>🎨 Rich Text Editor</h2>
+                <div class="info-box success">
+                    <strong>✨ New Feature!</strong> QuickNote now includes a powerful rich text editor with formatting toolbar.
+                </div>
+
+                <h3>Showing/Hiding the Toolbar</h3>
+                <ol>
+                    <li><strong>Toggle Toolbar Visibility</strong>
+                        <ul>
+                            <li>Tap the <strong>Text Format</strong> icon (Aa) in the app bar</li>
+                            <li>Icon turns <strong>blue</strong> when toolbar is visible</li>
+                            <li>Icon is <strong>black</strong> when toolbar is hidden</li>
+                        </ul>
+                    </li>
+                    <li><strong>Toolbar Animation</strong>
+                        <ul>
+                            <li>Toolbar slides in/out with smooth animation</li>
+                            <li>Provides more screen space when hidden</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>Text Formatting (Row 1)</h3>
+                
+                <h4>Bold Text</h4>
+                <ol>
+                    <li>Select text you want to make bold</li>
+                    <li>Tap the <strong>B</strong> (Bold) button in the toolbar</li>
+                    <li>Selected text becomes bold</li>
+                    <li>Tap again to remove bold formatting</li>
+                </ol>
+
+                <h4>Italic Text</h4>
+                <ol>
+                    <li>Select text to italicize</li>
+                    <li>Tap the <strong>I</strong> (Italic) button</li>
+                    <li>Text becomes slanted/italic</li>
+                    <li>Tap again to toggle off</li>
+                </ol>
+
+                <h4>Underline Text</h4>
+                <ol>
+                    <li>Select text</li>
+                    <li>Tap the <strong>U</strong> (Underline) button</li>
+                    <li>Text gets underlined</li>
+                    <li>Tap again to remove underline</li>
+                </ol>
+
+                <h4>Font Size</h4>
+                <ol>
+                    <li>Place cursor or select text</li>
+                    <li>Tap the <strong>Font Size</strong> (A+) button repeatedly to cycle:
+                        <ul>
+                            <li>Normal size (default)</li>
+                            <li>Large size</li>
+                            <li>Huge size</li>
+                            <li>Back to normal</li>
+                        </ul>
+                    </li>
+                    <li>Size applies to selected text or new typing</li>
+                </ol>
+
+                <h4>Font Family (New! ✨)</h4>
+                <ol>
+                    <li>Place cursor or select text</li>
+                    <li>Tap the <strong>Font Family</strong> (dropdown) button</li>
+                    <li>Choose from available fonts:
+                        <ul>
+                            <li><strong>System Default</strong>: Uses device's default font</li>
+                            <li><strong>Sans Serif</strong>: Clean, modern font (Arial, Helvetica)</li>
+                            <li><strong>Serif</strong>: Traditional font with decorative strokes (Times New Roman)</li>
+                            <li><strong>Monospace</strong>: Fixed-width font for code (Courier)</li>
+                            <li><strong>Cursive</strong>: Handwriting-style font</li>
+                        </ul>
+                    </li>
+                    <li>Selected font applies immediately</li>
+                    <li>Choose "Clear" to reset to default font</li>
+                </ol>
+
+                <div class="info-box note">
+                    <strong>💡 Tips:</strong>
+                    <ul>
+                        <li>Different fonts work better for different purposes</li>
+                        <li>Monospace is ideal for code snippets or tables</li>
+                        <li>Serif fonts are traditional for formal documents</li>
+                        <li>Sans Serif fonts are modern and easy to read on screens</li>
+                    </ul>
+                </div>
+
+                <h4>Font Color</h4>
+                <ol>
+                    <li>Select text to colorize</li>
+                    <li>Tap the <strong>Color</strong> (palette) button</li>
+                    <li>Choose from preset colors in the dialog: Red, Blue, Green, Orange, Purple, Pink</li>
+                    <li>Tap <strong>Clear</strong> to remove color</li>
+                    <li>Tap <strong>Cancel</strong> to close without changes</li>
+                </ol>
+
+                <h3>Lists and Structure</h3>
+                
+                <h4>Bullet List</h4>
+                <ol>
+                    <li>Place cursor where you want the list</li>
+                    <li>Tap the <strong>Bullet List</strong> (•) button</li>
+                    <li>Each line becomes a bullet point</li>
+                    <li>Press Enter to create new bullet</li>
+                    <li>Tap button again to exit bullet list</li>
+                </ol>
+
+                <h4>Numbered List</h4>
+                <ol>
+                    <li>Place cursor at list start</li>
+                    <li>Tap the <strong>Numbered List</strong> (1.) button</li>
+                    <li>Each line gets automatic numbering (1, 2, 3...)</li>
+                    <li>Press Enter for next number</li>
+                    <li>Tap button again to exit numbered list</li>
+                </ol>
+
+                <h4>Checklist</h4>
+                <ol>
+                    <li>Tap the <strong>Checklist</strong> (☐) button</li>
+                    <li>Adds an unchecked box (☐) at line start</li>
+                    <li>Tap the checklist line to toggle: ☐ Unchecked / ☑ Checked</li>
+                    <li>Perfect for to-do lists</li>
+                </ol>
+
+                <h3>Insert Content</h3>
+                
+                <h4>Insert Image (New! ✨)</h4>
+                <ol>
+                    <li>Tap the <strong>Image</strong> (🖼) button</li>
+                    <li>Choose an image from your device gallery</li>
+                    <li>Image embeds at cursor position as a thumbnail</li>
+                    <li>Image automatically resizes (max height: 300px)</li>
+                    <li><strong>Tap the image</strong> to view full-screen with zoom</li>
+                    <li>Supports both local images and network URLs</li>
+                </ol>
+
+                <div class="info-box success">
+                    <strong>🖼️ Image Viewer Features:</strong>
+                    <ul>
+                        <li><strong>Full-screen display</strong>: Opens in dedicated viewer</li>
+                        <li><strong>Pinch-to-zoom</strong>: Use two fingers to zoom in/out</li>
+                        <li><strong>Pan gestures</strong>: Swipe to move around zoomed image</li>
+                        <li><strong>Close button</strong>: Tap X or back button to return to note</li>
+                        <li><strong>Loading indicator</strong>: Shows progress while loading</li>
+                        <li><strong>Error handling</strong>: Displays message if image can't be loaded</li>
+                    </ul>
+                </div>
+
+                <h4>Insert Link</h4>
+                <ol>
+                    <li>Select text to become the link</li>
+                    <li>Tap the <strong>Link</strong> (🔗) button</li>
+                    <li>Enter the URL in the dialog</li>
+                    <li>Tap <strong>OK</strong> to create the link</li>
+                </ol>
+
+                <h3>Text Alignment</h3>
+                <ul>
+                    <li><strong>Align Left</strong>: Text aligns to left margin (default)</li>
+                    <li><strong>Align Center</strong>: Text centers horizontally</li>
+                    <li><strong>Align Right</strong>: Text aligns to right margin</li>
+                    <li><strong>Justify</strong>: Text spreads evenly between margins</li>
+                </ul>
+            </section>
+
+            <section id="categories">
+                <h2>📁 Categories and Organization</h2>
+                
+                <h3>Understanding Categories</h3>
+                <ul>
+                    <li><strong>All</strong>: Shows every note regardless of category</li>
+                    <li><strong>Personal</strong>: Default category for personal notes</li>
+                    <li><strong>Work</strong>: For work-related notes</li>
+                    <li><strong>Languages</strong>: Sample category for multi-language content</li>
+                    <li><strong>Custom</strong>: Create your own categories</li>
+                </ul>
+
+                <h3>Creating New Categories</h3>
+                <ol>
+                    <li>Open <strong>Category Management</strong>: Tap <strong>Menu</strong> → <strong>Categories</strong> → <strong>Manage Categories</strong></li>
+                    <li><strong>Add Category</strong>:
+                        <ul>
+                            <li>Tap the <strong>+</strong> button</li>
+                            <li>Enter category name</li>
+                            <li>Choose a color for the category</li>
+                            <li>Tap <strong>Save</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Result</strong>: New category appears in the list and is available when creating/editing notes</li>
+                </ol>
+
+                <h3>Editing Categories</h3>
+                <ol>
+                    <li>Open <strong>Manage Categories</strong></li>
+                    <li>Tap on any category (except defaults)</li>
+                    <li>Modify name or color</li>
+                    <li>Tap <strong>Save</strong> to update</li>
+                </ol>
+
+                <h3>Deleting Categories</h3>
+                <div class="info-box warning">
+                    <strong>⚠️ Note:</strong> Notes in deleted category move to "Personal". Default categories (All, Personal, Work) cannot be deleted.
+                </div>
+                <ol>
+                    <li>Open <strong>Manage Categories</strong></li>
+                    <li>Long-press a category</li>
+                    <li>Tap <strong>Delete</strong></li>
+                </ol>
+
+                <h3>Assigning Notes to Categories</h3>
+                <ol>
+                    <li><strong>When Creating</strong>:
+                        <ul>
+                            <li>New notes go to currently selected category</li>
+                            <li>Or choose category from dropdown in editor</li>
+                        </ul>
+                    </li>
+                    <li><strong>When Editing</strong>:
+                        <ul>
+                            <li>Open the note</li>
+                            <li>Tap <strong>Category</strong> dropdown in editor</li>
+                            <li>Select new category</li>
+                            <li>Note moves automatically</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <section id="search-filter">
+                <h2>🔍 Search and Filter</h2>
+                
+                <h3>Basic Search</h3>
+                <ol>
+                    <li><strong>Open Search</strong>: Tap the <strong>Search</strong> (🔍) icon in the app bar</li>
+                    <li><strong>Enter Query</strong>: Type keywords to search for. Results update as you type (live search)</li>
+                    <li><strong>Search Scope</strong>: Searches in both note <strong>titles</strong> and <strong>content</strong> across all categories</li>
+                </ol>
+
+                <h3>Full-Text Search (FTS)</h3>
+                <div class="info-box note">
+                    <strong>💡 About FTS5:</strong> QuickNote uses <strong>FTS5</strong> (Full-Text Search) when available for faster search on large note collections, better relevance ranking, and prefix matching support.
+                </div>
+
+                <h3>Advanced Search Tips</h3>
+                <ul>
+                    <li><strong>Multiple Words</strong>: Type <code>meeting notes</code> - Finds notes containing both "meeting" AND "notes"</li>
+                    <li><strong>Partial Words</strong>: Type <code>doc</code> - Matches "document", "documentation", "doctor", etc.</li>
+                    <li><strong>Clear Search</strong>: Tap <strong>X</strong> in search bar to clear or tap back button to exit search</li>
+                </ul>
+
+                <h3>Filtering Notes</h3>
+                
+                <h4>Filter by Category</h4>
+                <ol>
+                    <li>Select a category from bottom navigation</li>
+                    <li>Only notes in that category appear</li>
+                    <li>Select <strong>All</strong> to see everything</li>
+                </ol>
+
+                <h4>Filter by Favorites</h4>
+                <ol>
+                    <li>Tap <strong>Menu</strong> → <strong>Show Favorites Only</strong></li>
+                    <li>Only favorited notes display</li>
+                    <li>Works across all categories</li>
+                    <li>Tap again to show all notes</li>
+                </ol>
+
+                <h4>Combine Filters</h4>
+                <p><strong>Example:</strong> Show only favorite work notes</p>
+                <ol>
+                    <li>Select <strong>Work</strong> category</li>
+                    <li>Enable <strong>Show Favorites Only</strong></li>
+                    <li>Result: Favorited work notes only</li>
+                </ol>
+            </section>
+
+            <section id="favorites">
+                <h2>⭐ Favorites</h2>
+                
+                <h3>Marking as Favorite</h3>
+                <ol>
+                    <li><strong>From Notes List</strong>: Tap the <strong>Star</strong> icon on any note card. Star fills in (yellow/gold) when favorited</li>
+                    <li><strong>From Note Editor</strong>: Open a note and tap the <strong>Star</strong> icon in the app bar</li>
+                </ol>
+
+                <h3>Viewing Favorites</h3>
+                <ol>
+                    <li><strong>Filter View</strong>: Tap <strong>Menu</strong> → <strong>Show Favorites Only</strong></li>
+                    <li><strong>Visual Indicator</strong>: Favorite notes display a <strong>filled star</strong> icon</li>
+                </ol>
+
+                <h3>Use Cases for Favorites</h3>
+                <ul>
+                    <li><strong>Quick Access</strong>: Star important notes for fast retrieval</li>
+                    <li><strong>Priority Items</strong>: Mark urgent tasks or reminders</li>
+                    <li><strong>Reference Notes</strong>: Favorite frequently-accessed information</li>
+                    <li><strong>Bookmarks</strong>: Mark notes you're currently working on</li>
+                </ul>
+            </section>
+
+            <section id="backup-restore">
+                <h2>💾 Backup and Restore</h2>
+                <div class="info-box warning">
+                    <strong>⚠️ Important:</strong> Always backup before major updates or device changes!
+                </div>
+
+                <h3>Understanding Backup Files</h3>
+                <ul>
+                    <li><strong>Format</strong>: JSON file with <code>.backup</code> extension</li>
+                    <li><strong>Contents</strong>: All notes, categories, and metadata</li>
+                    <li><strong>Schema Version</strong>: Tracks database version (currently v6)</li>
+                    <li><strong>Compatibility</strong>: Backward compatible with older backups</li>
+                </ul>
+
+                <h3>Creating a Backup</h3>
+                
+                <h4>Method 1: Save to Device</h4>
+                <ol>
+                    <li>Open <strong>Backup Screen</strong>: Tap <strong>Menu</strong> → <strong>Backup & Restore</strong></li>
+                    <li><strong>Create Backup</strong>: Tap <strong>Backup</strong> → <strong>Save notes to device storage</strong></li>
+                    <li><strong>Choose Location</strong>: Native file picker opens. Navigate to desired folder. Filename suggestion: <code>quicknote.backup</code></li>
+                    <li><strong>Confirmation</strong>: Green snackbar: "Backup saved successfully!"</li>
+                </ol>
+
+                <h4>Method 2: Share Backup</h4>
+                <ol>
+                    <li>Open <strong>Backup Screen</strong>: Tap <strong>Menu</strong> → <strong>Backup & Restore</strong></li>
+                    <li><strong>Share Backup</strong>: Tap <strong>Share Backup</strong> → <strong>Share backup file via email or cloud</strong></li>
+                    <li><strong>Choose App</strong>: Share sheet appears with installed apps (Email, Google Drive, Dropbox, etc.)</li>
+                    <li><strong>Send/Upload</strong>: Complete the sharing action in chosen app</li>
+                </ol>
+
+                <h3>Restoring from Backup</h3>
+                
+                <h4>Method 1: Restore (Merge)</h4>
+                <p><strong>Use When:</strong> You want to add backup data to existing notes (no deletions)</p>
+                <ol>
+                    <li>Open <strong>Backup Screen</strong>: Tap <strong>Menu</strong> → <strong>Backup & Restore</strong></li>
+                    <li><strong>Start Restore</strong>: Tap <strong>Restore (merge)</strong> → <strong>Add backup data to existing notes</strong></li>
+                    <li><strong>Select Backup File</strong>: File picker opens. Browse to your <code>.backup</code> file</li>
+                    <li><strong>Import Process</strong>: Notes and categories import. <strong>Duplicates:</strong> Existing IDs are skipped. <strong>New items:</strong> Added to database</li>
+                    <li><strong>Completion</strong>: Snackbar: "Restore completed (merge)." Status shows: "Restored: X notes, Y categories"</li>
+                </ol>
+
+                <h4>Method 2: Restore (Replace)</h4>
+                <div class="info-box warning">
+                    <strong>⚠️ Warning:</strong> This will delete all existing notes and categories before importing!
+                </div>
+                <p><strong>Use When:</strong> You want to completely replace all data with backup (destructive!)</p>
+                <ol>
+                    <li>Open <strong>Backup Screen</strong></li>
+                    <li><strong>Start Replace</strong>: Tap <strong>Restore (replace)</strong> → <strong>Replace all notes with backup data</strong></li>
+                    <li><strong>Confirm Action</strong>: Warning dialog appears. Tap <strong>Yes, replace</strong> to proceed</li>
+                    <li><strong>Select Backup File</strong>: Choose <code>.backup</code> file</li>
+                    <li><strong>Import Process</strong>: All existing notes deleted, all categories deleted (except defaults), backup data imported fresh</li>
+                </ol>
+
+                <h3>Backup Best Practices</h3>
+                <ol>
+                    <li><strong>Regular Backups</strong>: Create weekly backups (or before major changes). Store in multiple locations (device + cloud)</li>
+                    <li><strong>Before Updating</strong>: Always backup before app updates</li>
+                    <li><strong>Test Restores</strong>: Occasionally test restore on a different device</li>
+                    <li><strong>Naming Convention</strong>: Use descriptive names: <code>quicknote_2025-10-04.backup</code></li>
+                    <li><strong>Cloud Storage</strong>: Upload to Google Drive, Dropbox, or OneDrive</li>
+                </ol>
+
+                <h3>Backup Compatibility</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Backup Version</th>
+                            <th>Current App</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>v3, v4, v5 (older)</td>
+                            <td>v6 (current)</td>
+                            <td>✅ Works perfectly (plain text)</td>
+                        </tr>
+                        <tr>
+                            <td>v6 (current)</td>
+                            <td>v6 (current)</td>
+                            <td>✅ Perfect match (with Rich Text)</td>
+                        </tr>
+                        <tr>
+                            <td>v7+ (future)</td>
+                            <td>v6 (current)</td>
+                            <td>⚠️ Warning shown, user decides</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="sharing">
+                <h2>📤 Sharing Notes</h2>
+                
+                <h3>Share a Single Note</h3>
+                <ol>
+                    <li><strong>Open the Note</strong>: Tap the note in the list to open editor</li>
+                    <li><strong>Tap Share Icon</strong>: Look for <strong>Share</strong> (📤) icon in app bar</li>
+                    <li><strong>Choose Share Option</strong>:
+                        <ul>
+                            <li><strong>Share full note</strong>: Includes both title and content</li>
+                            <li><strong>Share content only</strong>: Shares content without title (disabled if note has no content)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Select App</strong>: System share sheet appears (Email, WhatsApp, SMS, etc.)</li>
+                    <li><strong>Shared Content</strong>: Rich text formatting converts to plain text. Images are referenced by path</li>
+                </ol>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>What's Shared</th>
+                            <th>When to Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Share full note</strong></td>
+                            <td>Title + Content</td>
+                            <td>Sending complete note with context</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Share content only</strong></td>
+                            <td>Content only (no title)</td>
+                            <td>Quick sharing without title overhead</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Share Multiple Notes (Workaround)</h3>
+                <p>QuickNote doesn't have bulk share, but you can:</p>
+                <ol>
+                    <li><strong>Use Backup</strong>: Create a backup file, share the <code>.backup</code> file. Recipient can restore on their device</li>
+                    <li><strong>Copy-Paste</strong>: Open each note, copy content manually, paste into email/document</li>
+                </ol>
+            </section>
+
+            <section id="settings">
+                <h2>⚙️ Settings and Customization</h2>
+                
+                <h3>Accessing Settings</h3>
+                <ol>
+                    <li>Tap <strong>Menu</strong> (☰) in the app bar</li>
+                    <li>Select <strong>Settings</strong></li>
+                </ol>
+
+                <h3>View Options</h3>
+                
+                <h4>Grid View vs List View</h4>
+                <ul>
+                    <li><strong>Grid View</strong>: Notes display as cards in a grid (2 columns). Compact view for many notes</li>
+                    <li><strong>List View</strong>: Notes in vertical list (1 column). Shows more content preview</li>
+                </ul>
+
+                <h3>Sorting Options</h3>
+                <p>Access via <strong>Menu</strong> → <strong>Sort By</strong></p>
+                <ul>
+                    <li><strong>Sort by Modified Date</strong>: Newest first (default) or Oldest first</li>
+                    <li><strong>Sort by Title</strong>: A to Z (alphabetical) or Z to A (reverse alphabetical)</li>
+                </ul>
+
+                <h3>Language Support</h3>
+                <ul>
+                    <li>QuickNote supports <strong>multi-language input</strong></li>
+                    <li>Type in any language: English, Thai (ภาษาไทย), Japanese (日本語), Korean (한국어), Chinese (中文), Arabic (العربية), and many more!</li>
+                    <li>No language switching needed</li>
+                </ul>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>🔧 Troubleshooting</h2>
+                
+                <h3>App Performance Issues</h3>
+                <p><strong>Problem:</strong> App feels slow or laggy</p>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Clear app cache (Settings → Storage → Clear Cache)</li>
+                    <li>Reduce number of large images in notes</li>
+                    <li>Delete very old unused notes</li>
+                    <li>Restart your device</li>
+                </ol>
+
+                <h3>Note Editing Issues</h3>
+                <p><strong>Problem:</strong> Rich text formatting not working</p>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Ensure toolbar is visible (tap Aa icon)</li>
+                    <li>Select text before applying formatting</li>
+                    <li>Try restarting the app</li>
+                </ol>
+
+                <h3>Backup/Restore Errors</h3>
+                <p><strong>Problem:</strong> "Invalid backup format" error</p>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Verify file has <code>.backup</code> extension</li>
+                    <li>Don't manually edit backup files</li>
+                    <li>File may be corrupted; try another backup</li>
+                </ol>
+
+                <h3>Search Issues</h3>
+                <p><strong>Problem:</strong> Search returns no results</p>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Check spelling of search terms</li>
+                    <li>Try partial words (e.g., "doc" instead of "document")</li>
+                    <li>Ensure notes exist in database</li>
+                </ol>
+            </section>
+
+            <section id="privacy">
+                <h2>🔒 Privacy and Security</h2>
+                
+                <h3>Data Storage</h3>
+                <ul>
+                    <li><strong>Local Storage</strong>: All notes stored in SQLite database on your device</li>
+                    <li><strong>Location</strong>: Internal app storage (not accessible to other apps)</li>
+                    <li><strong>Encryption</strong>: Data stored in plaintext (device security applies)</li>
+                </ul>
+
+                <h3>Data Collection</h3>
+                <ul>
+                    <li><strong>Personal Data</strong>: QuickNote does NOT collect personal information</li>
+                    <li><strong>Analytics</strong>: No tracking or analytics (fully offline app)</li>
+                    <li><strong>Ads</strong>: No advertisements or ad networks</li>
+                </ul>
+
+                <h3>Best Practices</h3>
+                <ol>
+                    <li><strong>Lock Your Device</strong>: Use PIN/pattern/fingerprint on your phone</li>
+                    <li><strong>Secure Backups</strong>: Store in password-protected cloud storage</li>
+                    <li><strong>Be Careful Sharing</strong>: Don't share sensitive notes publicly</li>
+                    <li><strong>Regular Backups</strong>: Protect against device loss/damage</li>
+                    <li><strong>App Updates</strong>: Keep QuickNote updated for security patches</li>
+                </ol>
+            </section>
+
+            <section id="tips">
+                <h2>💡 Tips and Tricks</h2>
+                
+                <h3>Productivity Tips</h3>
+                <ol>
+                    <li><strong>Use Categories Effectively</strong>: Create categories for different life areas (Home, Work, School, etc.). Color-code by priority or type</li>
+                    <li><strong>Favorite System</strong>: Star active projects or current tasks. Unstar when complete. Quick filter to see what's active</li>
+                    <li><strong>Rich Text for Clarity</strong>: Use <strong>bold</strong> for important points, add bullet lists for action items, headers to organize long notes</li>
+                    <li><strong>Regular Backup Schedule</strong>: Every Sunday evening create a backup, before major app updates, before device changes</li>
+                </ol>
+
+                <h3>Advanced Techniques</h3>
+                <ol>
+                    <li><strong>Note Templates</strong>: Create template notes (meeting template, to-do template). Copy content to new notes</li>
+                    <li><strong>Color Coding System</strong>:
+                        <ul>
+                            <li>Let categories auto-assign colors by topic</li>
+                            <li>Use custom colors for priority: Red (Urgent), Yellow (In-progress), Green (Completed), Blue (Reference)</li>
+                            <li>Change category color to update all related notes at once</li>
+                        </ul>
+                    </li>
+                    <li><strong>Image Organization</strong>: Insert screenshots for visual notes. Tap images to view full-screen. Zoom in to see details. Use for diagrams, receipts, or whiteboard photos</li>
+                    <li><strong>Selective Sharing</strong>: Share full note when context is important. Share content only for quick information transfer</li>
+                </ol>
+            </section>
+
+            <section id="faq">
+                <h2>❓ Frequently Asked Questions (FAQ)</h2>
+                
+                <div class="faq-item">
+                    <h4>Q: Is QuickNote free?</h4>
+                    <p><strong>A:</strong> Yes! QuickNote is completely free with no ads or in-app purchases.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Does QuickNote work offline?</h4>
+                    <p><strong>A:</strong> Yes! All features work without internet. Only sharing via cloud apps requires internet.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Can I sync notes between devices?</h4>
+                    <p><strong>A:</strong> Not automatically. Use backup/restore to manually transfer notes between devices.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Can I add images to notes?</h4>
+                    <p><strong>A:</strong> Yes! Use the image button in the rich text toolbar. Tap inserted images to view full-screen with zoom.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Can I zoom into images in notes?</h4>
+                    <p><strong>A:</strong> Yes! Tap any image thumbnail in a note to open full-screen viewer. Use pinch-to-zoom and pan gestures to explore the image in detail.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Why does my note automatically have a color?</h4>
+                    <p><strong>A:</strong> New notes inherit their category's color automatically. You can override this by applying a custom color via the palette icon.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: How do I change all notes in a category to a new color?</h4>
+                    <p><strong>A:</strong> Edit the category color in Manage Categories. All notes using that category's default color will update automatically (notes with custom colors won't change).</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: What's the difference between "Share full note" and "Share content only"?</h4>
+                    <p><strong>A:</strong> "Share full note" includes both title and content, while "Share content only" shares just the note body without the title. Choose based on whether recipients need context from the title.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: How do I recover deleted notes?</h4>
+                    <p><strong>A:</strong> Use your most recent backup file with Restore (merge). No built-in trash bin currently.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: How do I request features or report bugs?</h4>
+                    <p><strong>A:</strong> Use <strong>Menu → Send Feedback</strong> in the app to contact developers.</p>
+                </div>
+            </section>
+
+            <!-- Footer in Content -->
+            <section id="contact" style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                <h2>📧 Contact and Support</h2>
+                
+                <h3>Get Help</h3>
+                <ul>
+                    <li><strong>In-App Feedback</strong>: Menu → Send Feedback</li>
+                    <li><strong>GitHub Issues</strong>: <a href="https://github.com/monchai68/QuickNote" target="_blank">github.com/monchai68/QuickNote</a></li>
+                </ul>
+
+                <h3>Acknowledgments</h3>
+                <p>QuickNote is built with:</p>
+                <ul>
+                    <li><strong>Flutter</strong>: Google's UI toolkit</li>
+                    <li><strong>flutter_quill</strong>: Rich text editor library</li>
+                    <li><strong>sqflite</strong>: SQLite database plugin</li>
+                    <li><strong>Provider</strong>: State management solution</li>
+                </ul>
+
+                <p style="margin-top: 2rem; text-align: center; font-size: 1.2rem;">
+                    <strong>Thank you for using QuickNote! 📝✨</strong>
+                </p>
+                <p style="text-align: center; color: var(--text-secondary);">
+                    <em>Last updated: October 5, 2025 | Manual version: 1.1.0 | App version: 1.1.0 (Schema v6)</em>
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        ↑
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 QuickNote. All rights reserved.</p>
+        <p>Made with ❤️ by the QuickNote Team</p>
+        <p><a href="https://github.com/monchai68/QuickNote" target="_blank">GitHub Repository</a></p>
+    </footer>
+
+    <script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active Navigation Highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const contentSections = document.querySelectorAll('.content section, .content h2, .content h3, .content h4, .content p, .content li');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            // Remove previous highlights
+            document.querySelectorAll('.highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.textContent), el);
+                parent.normalize();
+            });
+
+            if (searchTerm === '') return;
+
+            // Search and highlight
+            contentSections.forEach(section => {
+                const walker = document.createTreeWalker(
+                    section,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+
+                const nodesToHighlight = [];
+                let node;
+
+                while (node = walker.nextNode()) {
+                    if (node.nodeValue.toLowerCase().includes(searchTerm)) {
+                        nodesToHighlight.push(node);
+                    }
+                }
+
+                nodesToHighlight.forEach(textNode => {
+                    const text = textNode.nodeValue;
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    const parts = text.split(regex);
+                    
+                    const fragment = document.createDocumentFragment();
+                    parts.forEach(part => {
+                        if (part.toLowerCase() === searchTerm) {
+                            const span = document.createElement('span');
+                            span.className = 'highlight';
+                            span.textContent = part;
+                            fragment.appendChild(span);
+                        } else {
+                            fragment.appendChild(document.createTextNode(part));
+                        }
+                    });
+                    
+                    textNode.parentNode.replaceChild(fragment, textNode);
+                });
+            });
+
+            // Scroll to first result
+            const firstHighlight = document.querySelector('.highlight');
+            if (firstHighlight) {
+                firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+
+        // Print Functionality
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+    </script>
+</body>
+</html>
