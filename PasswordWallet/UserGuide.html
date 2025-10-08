@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PasswordWallet User Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6C5CE7;
+            --secondary-color: #5A67D8;
+            --accent-color: #4CAF50;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            --dark-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #3a3a3a;
+            --hover-bg: #3a3a3a;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        header .version {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--card-bg);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 138px;
+            z-index: 999;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: var(--hover-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(108, 92, 231, 0.3);
+        }
+
+        .nav-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        /* Content Sections */
+        section {
+            background: var(--card-bg);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        section.hidden {
+            display: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: var(--info-color);
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: var(--hover-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(108, 92, 231, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--dark-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.info {
+            background: rgba(52, 152, 219, 0.1);
+            border-color: var(--info-color);
+        }
+
+        .info-box.warning {
+            background: rgba(243, 156, 18, 0.1);
+            border-color: var(--warning-color);
+        }
+
+        .info-box.danger {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: var(--danger-color);
+        }
+
+        .info-box.success {
+            background: rgba(76, 175, 80, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        /* Back to Top Button */
+        #backToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.5);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(108, 92, 231, 0.7);
+        }
+
+        #backToTop.show {
+            display: flex;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--hover-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--primary-color);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        tr:hover {
+            background: var(--dark-bg);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            nav {
+                top: 118px;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #backToTop {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Highlight search results */
+        .highlight {
+            background: rgba(243, 156, 18, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔐 PasswordWallet</h1>
+        <p class="subtitle">Complete User Guide</p>
+        <span class="version">Version 1.0.5+6</span>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSection('all')">All Sections</button>
+            <button class="nav-btn" onclick="showSection('introduction')">Introduction</button>
+            <button class="nav-btn" onclick="showSection('getting-started')">Getting Started</button>
+            <button class="nav-btn" onclick="showSection('home-screen')">Home Screen</button>
+            <button class="nav-btn" onclick="showSection('categories')">Categories</button>
+            <button class="nav-btn" onclick="showSection('password-items')">Password Items</button>
+            <button class="nav-btn" onclick="showSection('favorites')">Favorites</button>
+            <button class="nav-btn" onclick="showSection('search')">Search</button>
+            <button class="nav-btn" onclick="showSection('settings')">Settings</button>
+            <button class="nav-btn" onclick="showSection('security')">Security</button>
+            <button class="nav-btn" onclick="showSection('troubleshooting')">Troubleshooting</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search in guide..." onkeyup="searchContent()">
+        </div>
+
+        <!-- Introduction Section -->
+        <section id="introduction">
+            <h2>📖 Introduction</h2>
+            
+            <p><strong>PasswordWallet</strong> is a secure password management application designed to help you store and organize your sensitive information safely. With features like biometric authentication, encrypted backups, and cross-device restoration, PasswordWallet keeps your data secure while remaining easy to use.</p>
+
+            <h3>✨ Key Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Secure Storage</div>
+                    <div class="feature-desc">All passwords encrypted locally on your device</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👆</div>
+                    <div class="feature-title">Biometric Auth</div>
+                    <div class="feature-desc">Fingerprint/Face ID support</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <div class="feature-title">Backup & Restore</div>
+                    <div class="feature-desc">Cross-device compatible backup system</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <div class="feature-title">Categories</div>
+                    <div class="feature-desc">Organize passwords by type</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-title">Favorites</div>
+                    <div class="feature-desc">Quick access to frequently used passwords</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">Search</div>
+                    <div class="feature-desc">Fast search across all items and fields</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📤</div>
+                    <div class="feature-title">Import/Export</div>
+                    <div class="feature-desc">CSV import/export for bulk operations</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <div class="feature-title">Cloud Sync</div>
+                    <div class="feature-desc">Google Drive integration (optional)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started Section -->
+        <section id="getting-started">
+            <h2>🚀 Getting Started</h2>
+
+            <h3>First Launch</h3>
+            <p>When you first open PasswordWallet, you'll be guided through the initial setup:</p>
+
+            <h4>1. Setup Master Password</h4>
+            <ul>
+                <li>Create a strong master password (this will be used to unlock the app)</li>
+                <li><strong>Important:</strong> Remember this password! There's no recovery method if you forget it</li>
+            </ul>
+
+            <div class="info-box warning">
+                <strong>⚠️ Password Requirements:</strong>
+                <ul style="margin-top: 0.5rem;">
+                    <li>At least 8 characters long</li>
+                    <li>Contain a mix of letters, numbers, and symbols</li>
+                    <li>Not easily guessable</li>
+                </ul>
+            </div>
+
+            <h4>2. Enable Biometric Authentication (Optional)</h4>
+            <ul>
+                <li>After setting your master password, you can enable fingerprint or face recognition</li>
+                <li>This allows faster access while maintaining security</li>
+                <li>You can enable/disable this later in Settings</li>
+            </ul>
+
+            <h4>3. Initial Login</h4>
+            <ul>
+                <li>Use your master password (or biometric if enabled) to access the app</li>
+            </ul>
+
+            <div class="info-box success">
+                <strong>✅ Pro Tip:</strong> Write down your master password and store it in a secure physical location (safe, locked drawer) as a backup.
+            </div>
+        </section>
+
+        <!-- Home Screen Section -->
+        <section id="home-screen">
+            <h2>🏠 Home Screen</h2>
+
+            <p>The Home Screen is your dashboard, providing an overview of your password collection and quick access to all features.</p>
+
+            <h3>Statistics Cards</h3>
+            <ul>
+                <li><strong>Total Passwords:</strong> Displays the total number of password items stored</li>
+                <li><strong>Favorites:</strong> Shows count of items marked as favorites (Orange badge)</li>
+            </ul>
+
+            <h3>Quick Actions Grid</h3>
+            <p>The Home Screen features a 2x2 grid of action cards:</p>
+
+            <div class="feature-grid">
+                <div class="feature-card" style="border-color: #3498db;">
+                    <div class="feature-icon">📁</div>
+                    <div class="feature-title">Categories</div>
+                    <div class="feature-desc">Browse and access password items by category</div>
+                </div>
+                <div class="feature-card" style="border-color: #4CAF50;">
+                    <div class="feature-icon">✏️</div>
+                    <div class="feature-title">Category Editor</div>
+                    <div class="feature-desc">Manage your categories (add, edit, delete, customize)</div>
+                </div>
+                <div class="feature-card" style="border-color: #e74c3c;">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-title">Favorites</div>
+                    <div class="feature-desc">Quick access to your favorite/frequently used passwords</div>
+                </div>
+                <div class="feature-card" style="border-color: #95a5a6;">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-title">Settings</div>
+                    <div class="feature-desc">App configuration, backup/restore, security settings</div>
+                </div>
+            </div>
+
+            <div class="info-box info">
+                <strong>ℹ️ Automatic Cloud Backup:</strong> PasswordWallet performs automatic Google Drive backups when you return to the Home Screen (if Google Drive is configured).
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories">
+            <h2>📂 Categories Management</h2>
+
+            <h3>Category List Screen</h3>
+            <p><strong>Access:</strong> Home → Categories</p>
+            <p>This screen displays all your password categories with item counts.</p>
+
+            <h4>Default Categories Include:</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin: 1rem 0;">
+                <div>• App</div>
+                <div>• Bank</div>
+                <div>• Broker</div>
+                <div>• Computer Logins</div>
+                <div>• Credit Card</div>
+                <div>• Crypto</div>
+                <div>• Database</div>
+                <div>• Email</div>
+                <div>• Identity Card</div>
+                <div>• Insurance</div>
+                <div>• Investment</div>
+                <div>• Others</div>
+                <div>• Router</div>
+                <div>• Server</div>
+                <div>• Shopping</div>
+                <div>• Software License</div>
+                <div>• SSH Key</div>
+                <div>• Website</div>
+                <div>• Wireless</div>
+            </div>
+
+            <h3>Category Editor Screen</h3>
+            <p><strong>Access:</strong> Home → Category Editor</p>
+
+            <h4>✏️ Add New Category</h4>
+            <ol>
+                <li>Tap the <strong>"+ Add New Category"</strong> button (green, bottom-right)</li>
+                <li>Enter category name</li>
+                <li>Choose an icon from the icon picker</li>
+                <li>Select a color</li>
+                <li>Tap <strong>Save</strong></li>
+            </ol>
+
+            <h4>✏️ Edit Category</h4>
+            <ol>
+                <li>Tap on any existing category</li>
+                <li>Modify name, icon, or color</li>
+                <li>Tap <strong>Save Changes</strong></li>
+            </ol>
+
+            <h4>🗑️ Delete Category</h4>
+            <ol>
+                <li>Tap on the category you want to delete</li>
+                <li>Tap the <strong>Delete</strong> button (red, trash icon)</li>
+                <li>Confirm deletion</li>
+            </ol>
+
+            <div class="info-box danger">
+                <strong>⚠️ Warning:</strong> Deleting a category will delete all password items within it. This action cannot be undone.
+            </div>
+
+            <h4>⚙️ Manage Category Fields</h4>
+            <ol>
+                <li>Tap on a category</li>
+                <li>Tap <strong>"Manage Fields"</strong> button</li>
+                <li>Opens the Category Field Editor screen</li>
+                <li>Here you can:
+                    <ul>
+                        <li>Add new fields (e.g., "Security Question", "Account Number")</li>
+                        <li>Edit existing field names</li>
+                        <li>Delete fields</li>
+                        <li>Reorder fields (drag and drop)</li>
+                        <li>Toggle field masking (hide sensitive fields like passwords)</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Password Items Section -->
+        <section id="password-items">
+            <h2>🔑 Password Items Management</h2>
+
+            <h3>Category Password List Screen</h3>
+            <p><strong>Access:</strong> Home → Categories → [Select a Category]</p>
+
+            <h4>Add New Item</h4>
+            <ol>
+                <li>Tap the <strong>green floating action button</strong> (+ icon, bottom-right)</li>
+                <li>Opens the Add New Item Screen</li>
+                <li>Fill in the fields (Name, Username, Password, etc.)</li>
+                <li>Tap <strong>Save</strong></li>
+            </ol>
+
+            <div class="info-box info">
+                <strong>💡 Tip:</strong> For password fields, tap the eye icon to show/hide the password while typing. This protects from shoulder surfing.
+            </div>
+
+            <h3>Item Detail Screen</h3>
+            <p><strong>Access:</strong> Category Password List → [Select an Item]</p>
+
+            <h4>Available Actions:</h4>
+            <ul>
+                <li><strong>📋 Copy Field Value:</strong> Tap the copy icon next to any field</li>
+                <li><strong>👁️ Show/Hide Password:</strong> Tap the eye icon to reveal masked fields</li>
+                <li><strong>✏️ Edit Item:</strong> Tap the pencil icon in top-right</li>
+                <li><strong>⭐ Toggle Favorite:</strong> Tap the heart icon in top-right</li>
+                <li><strong>🗑️ Delete Item:</strong> Tap the trash icon in top-right (requires confirmation)</li>
+            </ul>
+
+            <h4>Field Types:</h4>
+            <ul>
+                <li><strong>Masked Fields:</strong> Passwords show as •••• by default</li>
+                <li><strong>Regular Fields:</strong> Plain text (Username, Email, URL, etc.)</li>
+                <li><strong>Multi-line Fields:</strong> Notes and descriptions</li>
+            </ul>
+        </section>
+
+        <!-- Favorites Section -->
+        <section id="favorites">
+            <h2>⭐ Favorites</h2>
+
+            <p><strong>Access:</strong> Home → Favorites</p>
+
+            <p>The Favorites screen shows all items you've marked as favorites across all categories.</p>
+
+            <h3>Features:</h3>
+            <ul>
+                <li>View all favorited items in one place</li>
+                <li>Each item shows the item name and category</li>
+                <li>Tap any item to view full details</li>
+                <li>Search within favorites</li>
+                <li>Tap heart icon to remove from favorites (with animation)</li>
+            </ul>
+
+            <div class="info-box success">
+                <strong>✨ Pro Tip:</strong> Use favorites for passwords you access frequently (email, banking, work accounts) for quick access.
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search">
+            <h2>🔍 Search Functionality</h2>
+
+            <p>PasswordWallet provides powerful search across all screens where items are displayed.</p>
+
+            <h3>Where Search is Available:</h3>
+            <ul>
+                <li>Category Password List Screen</li>
+                <li>Favorites Screen</li>
+            </ul>
+
+            <h3>How to Use Search:</h3>
+            <ol>
+                <li>Tap the <strong>search icon</strong> (magnifying glass) in the app bar</li>
+                <li>The title bar transforms into a search field</li>
+                <li>Type your search query</li>
+                <li>Results filter in real-time as you type</li>
+            </ol>
+
+            <h4>What Search Looks For:</h4>
+            <ul>
+                <li><strong>Item names</strong> (e.g., "Gmail")</li>
+                <li><strong>Field values</strong> (usernames, emails, notes, etc.)</li>
+            </ul>
+
+            <div class="info-box info">
+                <strong>ℹ️ Note:</strong> Search is case-insensitive. "GMAIL", "gmail", and "Gmail" all match the same items.
+            </div>
+
+            <h4>Exit Search:</h4>
+            <ul>
+                <li>Tap the <strong>X icon</strong> (close) in the app bar</li>
+                <li>Or tap the <strong>back button</strong></li>
+                <li>Search clears and full list is restored</li>
+            </ul>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings">
+            <h2>⚙️ Settings</h2>
+
+            <p><strong>Access:</strong> Home → Settings</p>
+
+            <p>The Settings screen is your central hub for configuration, security, and data management.</p>
+
+            <h3>Settings Menu Options:</h3>
+
+            <h4>1. 🔐 Change Password</h4>
+            <p>Change your master password for enhanced security.</p>
+            <ul>
+                <li>Enter current password</li>
+                <li>Enter new password</li>
+                <li>Confirm new password</li>
+                <li>Tap Save</li>
+            </ul>
+            <div class="info-box danger">
+                <strong>⚠️ Important:</strong> You must know your current password to change it. No recovery option available.
+            </div>
+
+            <h4>2. 👆 Fingerprint/Biometric Toggle</h4>
+            <p>Enable or disable biometric authentication.</p>
+            <ul>
+                <li><strong>Enabled:</strong> App shows fingerprint/face ID screen on launch</li>
+                <li><strong>Disabled:</strong> App requires master password entry</li>
+            </ul>
+
+            <h4>3. 💾 Backup</h4>
+            <p>Create encrypted backup file (no password needed).</p>
+            <ul>
+                <li>Tap "Backup"</li>
+                <li>Choose save location</li>
+                <li>Backup created as .json file (base64-encoded)</li>
+                <li>Cross-device compatible</li>
+                <li>Survives app reinstall</li>
+            </ul>
+            <div class="info-box success">
+                <strong>✅ Recommendation:</strong> Create regular backups (weekly or monthly) and store in multiple secure locations.
+            </div>
+
+            <h4>4. ♻️ Restore</h4>
+            <p>Restore from encrypted backup (auto-detects format).</p>
+            <ul>
+                <li>Tap "Restore"</li>
+                <li>Choose backup file (.json)</li>
+                <li>PasswordWallet automatically detects format</li>
+                <li>All data restored (categories, items, fields)</li>
+            </ul>
+
+            <h4>5. 📥 Import CSV</h4>
+            <p>Import password data from CSV file.</p>
+            <p><strong>Supported Formats:</strong></p>
+            <ul>
+                <li><strong>Combined CSV:</strong> Category, Item Name, Field Name, Field Value</li>
+                <li><strong>ZIP with Multiple CSVs:</strong> Per-category CSV files</li>
+            </ul>
+            <pre><code>Category,Item Name,Field Name,Field Value
+Bank,Chase,Username,john@example.com
+Bank,Chase,Password,SecurePass123</code></pre>
+
+            <h4>6. 📤 Export CSV</h4>
+            <p>Export password data to CSV file.</p>
+            <ul>
+                <li><strong>Option 1:</strong> Single Combined CSV</li>
+                <li><strong>Option 2:</strong> Split by Category (ZIP)</li>
+            </ul>
+
+            <h4>7. ☁️ Sync to Google Drive</h4>
+            <p>Sync your data to Google Drive.</p>
+            <ul>
+                <li>Sign in with Google account</li>
+                <li>Grant PasswordWallet access</li>
+                <li>Automatic backups when returning to Home Screen</li>
+                <li>Accessible from anywhere with internet</li>
+            </ul>
+
+            <h4>8. ℹ️ About</h4>
+            <p>View app information and credits.</p>
+            <ul>
+                <li>App name and version</li>
+                <li>Description</li>
+                <li>Credits and attribution</li>
+                <li>License information</li>
+            </ul>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security">
+            <h2>🛡️ Security Features</h2>
+
+            <p>PasswordWallet takes security seriously. Here's how your data is protected:</p>
+
+            <h3>Local Encryption</h3>
+            <ul>
+                <li>All password data is encrypted on your device</li>
+                <li>SQLite database with encrypted storage</li>
+                <li>Field values stored securely</li>
+            </ul>
+
+            <h3>Master Password</h3>
+            <ul>
+                <li>Required to access the app</li>
+                <li>Used as encryption key derivation base</li>
+                <li>Never stored in plain text</li>
+                <li>Hashed using secure algorithms</li>
+            </ul>
+
+            <h3>Biometric Authentication</h3>
+            <ul>
+                <li>Optional fingerprint/face recognition</li>
+                <li>Faster than typing password</li>
+                <li>Biometric data never leaves your device</li>
+                <li>Fallback to master password always available</li>
+            </ul>
+
+            <h3>Field Masking</h3>
+            <ul>
+                <li>Sensitive fields (passwords) are masked by default</li>
+                <li>Manual toggle to reveal temporarily</li>
+                <li>Prevents shoulder surfing</li>
+                <li>Copy to clipboard without revealing on screen</li>
+            </ul>
+
+            <div class="info-box info">
+                <strong>🔒 Privacy:</strong> PasswordWallet does not collect analytics or telemetry. All data stays on your device (unless you enable cloud sync).
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section id="troubleshooting">
+            <h2>🔧 Troubleshooting</h2>
+
+            <h3>Problem: Forgot Master Password</h3>
+            <div class="info-box danger">
+                <strong>Solution:</strong>
+                <ul>
+                    <li>No built-in recovery method (for security)</li>
+                    <li>If you have a backup file:
+                        <ol>
+                            <li>Uninstall and reinstall the app</li>
+                            <li>Set up a new master password</li>
+                            <li>Restore from backup file</li>
+                        </ol>
+                    </li>
+                    <li><strong>Prevention:</strong> Write down your master password and store securely</li>
+                </ul>
+            </div>
+
+            <h3>Problem: Biometric Not Working</h3>
+            <ul>
+                <li>Check device biometric settings (Settings → Security → Fingerprint/Face ID)</li>
+                <li>Re-enroll biometric if needed</li>
+                <li>Try disabling and re-enabling in PasswordWallet Settings</li>
+                <li><strong>Fallback:</strong> Use master password to login</li>
+            </ul>
+
+            <h3>Problem: Backup File Not Restoring</h3>
+            <ul>
+                <li>Ensure backup file is not corrupted</li>
+                <li>Check file extension (should be .json)</li>
+                <li>Try re-downloading backup from cloud storage</li>
+                <li>Verify backup was created successfully (file size > 0 bytes)</li>
+            </ul>
+
+            <h3>Problem: CSV Import Count Mismatch</h3>
+            <p><strong>Issue:</strong> Exported 240 rows, but only 238 items imported</p>
+            <div class="info-box warning">
+                <strong>Explanation:</strong>
+                <ul>
+                    <li>Combined CSV uses one row per field</li>
+                    <li>Item with 5 fields = 5 rows in CSV</li>
+                    <li>Duplicate field rows overwrite previous values</li>
+                    <li>Empty item name rows are skipped</li>
+                </ul>
+                <strong>Solution:</strong> Use split ZIP export for 1:1 item→row mapping
+            </div>
+
+            <h3>Problem: App Performance Slow</h3>
+            <ul>
+                <li>Delete old/unused items</li>
+                <li>Export to CSV and reimport to compact database</li>
+                <li>Restart the app</li>
+                <li>Clear app cache (device Settings → Apps → PasswordWallet → Clear Cache)</li>
+            </ul>
+
+            <h3>Problem: Google Drive Sync Not Working</h3>
+            <ul>
+                <li>Check internet connection</li>
+                <li>Sign out and sign back into Google account</li>
+                <li>Re-authorize app in Google account settings</li>
+                <li>Check Google Drive storage quota</li>
+            </ul>
+        </section>
+
+        <!-- Tips Section -->
+        <section id="tips">
+            <h2>💡 Tips & Best Practices</h2>
+
+            <h3>Security Tips</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Strong Password</div>
+                    <div class="feature-desc">At least 12 characters, mix of upper/lower/numbers/symbols</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👆</div>
+                    <div class="feature-title">Enable Biometric</div>
+                    <div class="feature-desc">Convenience without sacrificing security</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <div class="feature-title">Regular Backups</div>
+                    <div class="feature-desc">Weekly or after adding important passwords</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Secure Storage</div>
+                    <div class="feature-desc">Store backups in encrypted cloud or password-protected USB</div>
+                </div>
+            </div>
+
+            <h3>Organization Tips</h3>
+            <ul>
+                <li><strong>Descriptive Names:</strong> "Gmail Personal" vs. "Gmail Work"</li>
+                <li><strong>Leverage Categories:</strong> Keep similar items together</li>
+                <li><strong>Use Favorites:</strong> Star frequently accessed passwords</li>
+                <li><strong>Add Notes:</strong> Use notes field for security questions, backup codes</li>
+                <li><strong>Consistent Naming:</strong> Use a naming convention across all items</li>
+            </ul>
+
+            <h3>Backup Strategy (3-2-1 Rule)</h3>
+            <ol>
+                <li><strong>3</strong> copies of your data</li>
+                <li><strong>2</strong> different storage types (local + cloud)</li>
+                <li><strong>1</strong> offsite backup (cloud or external drive)</li>
+            </ol>
+
+            <div class="info-box success">
+                <strong>✅ Best Practice:</strong> Test your restore process occasionally to verify backups work before an emergency.
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <h2>❓ Frequently Asked Questions</h2>
+
+            <h4>Q: Is my data sent to the cloud?</h4>
+            <p><strong>A:</strong> No, unless you explicitly enable Google Drive sync. All data is stored locally by default.</p>
+
+            <h4>Q: Can I use PasswordWallet on multiple devices?</h4>
+            <p><strong>A:</strong> Yes, use the backup/restore feature or Google Drive sync to share data across devices.</p>
+
+            <h4>Q: What happens if I forget my master password?</h4>
+            <p><strong>A:</strong> There's no recovery method. You must have a backup file to restore your data.</p>
+
+            <h4>Q: How secure is PasswordWallet?</h4>
+            <p><strong>A:</strong> Uses industry-standard encryption, local storage, and optional biometric authentication.</p>
+
+            <h4>Q: Can I export my passwords to another password manager?</h4>
+            <p><strong>A:</strong> Yes, use CSV export and import into your new password manager.</p>
+
+            <h4>Q: Can I customize category icons and colors?</h4>
+            <p><strong>A:</strong> Yes, in the Category Editor screen.</p>
+
+            <h4>Q: How do I add a new field to a category?</h4>
+            <p><strong>A:</strong> Category Editor → Select category → Manage Fields → Add Field</p>
+        </section>
+
+    </div>
+
+    <button id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <footer>
+        <p>🔐 <strong>PasswordWallet</strong> - Secure • Simple • Safe</p>
+        <p>Version 1.0.5+6 | Last Updated: October 2025</p>
+        <div class="footer-links">           
+            <a href="#" onclick="alert('Contact: [Your Email]'); return false;">Contact</a>
+            <a href="#" onclick="alert('Licensed under MIT'); return false;">License</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2025 PasswordWallet. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Show/Hide sections based on navigation
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            const navBtns = document.querySelectorAll('.nav-btn');
+            
+            // Remove active class from all buttons
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            if (sectionId === 'all') {
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                });
+            } else {
+                sections.forEach(section => {
+                    if (section.id === sectionId) {
+                        section.classList.remove('hidden');
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            }
+        }
+
+        // Search functionality
+        function searchContent() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('section');
+            
+            if (searchTerm === '') {
+                // Show all sections if search is empty
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    // Remove highlights
+                    const content = section.innerHTML;
+                    section.innerHTML = content.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
+                });
+                return;
+            }
+            
+            let foundCount = 0;
+            
+            sections.forEach(section => {
+                const content = section.textContent.toLowerCase();
+                
+                // Remove previous highlights
+                let html = section.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
+                
+                if (content.includes(searchTerm)) {
+                    section.classList.remove('hidden');
+                    foundCount++;
+                    
+                    // Highlight search term
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    html = html.replace(regex, '<span class="highlight">$1</span>');
+                    section.innerHTML = html;
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+            
+            // If no results, show message
+            if (foundCount === 0) {
+                sections.forEach(section => section.classList.add('hidden'));
+                // You could add a "no results" message here
+            }
+        }
+
+        // Back to top button
+        window.onscroll = function() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scroll for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Print functionality
+        function printGuide() {
+            window.print();
+        }
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + F for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+            
+            // Escape to clear search
+            if (e.key === 'Escape') {
+                document.getElementById('searchInput').value = '';
+                searchContent();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PasswordWallet User Guide loaded successfully! 🔐');
+        });
+    </script>
+</body>
+</html>
