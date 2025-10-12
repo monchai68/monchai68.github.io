@@ -404,7 +404,7 @@
     <!-- Header -->
     <div class="header">
         <h1>📝 QuickNote User Manual</h1>
-        <p class="version">Version 2.0.2 | Last Updated: October 2025</p>
+        <p class="version">Version 2.0.5 | Last Updated: October 2025</p>
     </div>
 
     <!-- Navigation -->
@@ -455,6 +455,18 @@
 
             <section id="intro">
                 <p><strong>Welcome to QuickNote!</strong> This comprehensive guide will help you master all features of the app, from basic note-taking to advanced rich text formatting.</p>
+                
+                <div class="info-box success" style="margin-top: 2rem;">
+                    <strong>✨ What's New in Version 2.0.5</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>Settings Screen</strong>: New dedicated settings with Hide Toolbar and Dark Mode options</li>
+                        <li><strong>Dark Mode</strong>: Complete dark theme for comfortable use in low-light environments</li>
+                        <li><strong>Category Reordering</strong>: Rearrange categories with Up/Down buttons in Manage Categories</li>
+                        <li><strong>Hide Toolbar Option</strong>: Keep editor toolbar hidden at startup for more screen space</li>
+                        <li><strong>App Icon in About</strong>: About dialog now shows the actual app icon</li>
+                        <li><strong>Better Theme Consistency</strong>: All screens and dialogs properly adapt to light/dark mode</li>
+                    </ul>
+                </div>
             </section>
 
             <section id="getting-started">
@@ -827,6 +839,25 @@
                     <li>Tap <strong>Save</strong> to update</li>
                 </ol>
 
+                <h3>Reordering Categories</h3>
+                <div class="info-box note">
+                    <strong>✨ New Feature:</strong> You can now rearrange the order of your categories to match your preferences!
+                </div>
+                <ol>
+                    <li>Open <strong>Manage Categories</strong></li>
+                    <li>Each category row has <strong>Up</strong> (↑) and <strong>Down</strong> (↓) arrow buttons</li>
+                    <li>Tap <strong>Up</strong> to move category higher in the list</li>
+                    <li>Tap <strong>Down</strong> to move category lower in the list</li>
+                    <li>The order is saved automatically and applies throughout the app</li>
+                </ol>
+                <p><strong>Tips:</strong></p>
+                <ul>
+                    <li>Put your most frequently used categories at the top for quick access</li>
+                    <li>The Up button is disabled when category is at the top</li>
+                    <li>The Down button is disabled when category is at the bottom</li>
+                    <li>Category order persists across app restarts</li>
+                </ul>
+
                 <h3>Deleting Categories</h3>
                 <div class="info-box warning">
                     <strong>⚠️ Note:</strong> Notes in deleted category move to "Personal". Default categories (All, Personal, Work) cannot be deleted.
@@ -1076,8 +1107,35 @@
                 <h3>Accessing Settings</h3>
                 <ol>
                     <li>Tap <strong>Menu</strong> (☰) in the app bar</li>
-                    <li>Select <strong>Settings</strong></li>
+                    <li>Select <strong>Settings...</strong></li>
                 </ol>
+
+                <h3>Settings Options</h3>
+                
+                <h4>Hide Toolbar</h4>
+                <ul>
+                    <li><strong>Purpose</strong>: Control whether the rich text editor toolbar is shown or hidden when you open a note</li>
+                    <li><strong>Location</strong>: Settings → Hide Toolbar (switch control)</li>
+                    <li><strong>Default</strong>: Off (toolbar visible at startup)</li>
+                    <li><strong>When enabled</strong>: Toolbar stays hidden when opening notes, reducing screen clutter. You can still toggle it manually in the editor</li>
+                    <li><strong>Tip</strong>: Enable this if you prefer more screen space for reading/writing</li>
+                </ul>
+
+                <h4>Dark Mode</h4>
+                <ul>
+                    <li><strong>Purpose</strong>: Switch the entire app between light and dark theme for better readability in different lighting conditions</li>
+                    <li><strong>Location</strong>: Settings → Dark Mode (switch control)</li>
+                    <li><strong>Default</strong>: Off (light mode)</li>
+                    <li><strong>When enabled</strong>:
+                        <ul>
+                            <li>Dark backgrounds (black/dark gray) throughout the app</li>
+                            <li>Light text (white/light gray) for better contrast</li>
+                            <li>Note cards, editor, dialogs, and toolbars all adapt to dark theme</li>
+                            <li>Reduces eye strain in low-light environments</li>
+                        </ul>
+                    </li>
+                    <li><strong>Persistence</strong>: Your theme choice is saved and restored when you restart the app</li>
+                </ul>
 
                 <h3>View Options</h3>
                 
@@ -1085,6 +1143,7 @@
                 <ul>
                     <li><strong>Grid View</strong>: Notes display as cards in a grid (2 columns). Compact view for many notes</li>
                     <li><strong>List View</strong>: Notes in vertical list (1 column). Shows more content preview</li>
+                    <li><strong>Toggle</strong>: Tap the view mode icon (grid/list) in the app bar to switch instantly</li>
                 </ul>
 
                 <h3>Sorting Options</h3>
@@ -1099,6 +1158,7 @@
                     <li>QuickNote supports <strong>multi-language input</strong></li>
                     <li>Type in any language: English, Thai (ภาษาไทย), Japanese (日本語), Korean (한국어), Chinese (中文), Arabic (العربية), and many more!</li>
                     <li>No language switching needed</li>
+                    <li>All features (search, sorting, categories) work seamlessly with Unicode text</li>
                 </ul>
             </section>
 
@@ -1176,9 +1236,11 @@
                 <h3>Productivity Tips</h3>
                 <ol>
                     <li><strong>Use Categories Effectively</strong>: Create categories for different life areas (Home, Work, School, etc.). Color-code by priority or type</li>
+                    <li><strong>Reorder Categories</strong>: Move your most-used categories to the top for quick access using the Up/Down buttons in Manage Categories</li>
                     <li><strong>Favorite System</strong>: Star active projects or current tasks. Unstar when complete. Quick filter to see what's active</li>
                     <li><strong>Rich Text for Clarity</strong>: Use <strong>bold</strong> for important points, add bullet lists for action items, headers to organize long notes</li>
                     <li><strong>Regular Backup Schedule</strong>: Every Sunday evening create a backup, before major app updates, before device changes</li>
+                    <li><strong>Dark Mode for Night</strong>: Enable Dark Mode in Settings for comfortable reading and writing in low-light environments</li>
                 </ol>
 
                 <h3>Advanced Techniques</h3>
@@ -1193,7 +1255,17 @@
                     </li>
                     <li><strong>Image Organization</strong>: Insert screenshots for visual notes. Tap images to view full-screen. Zoom in to see details. Use for diagrams, receipts, or whiteboard photos</li>
                     <li><strong>Selective Sharing</strong>: Share full note when context is important. Share content only for quick information transfer</li>
+                    <li><strong>Hide Toolbar for Writing Focus</strong>: Enable "Hide Toolbar at Startup" in Settings for distraction-free writing. Toggle toolbar manually when you need formatting</li>
+                    <li><strong>Theme for Different Times</strong>: Use Light Mode during daytime, switch to Dark Mode in the evening to reduce eye strain and save battery on OLED screens</li>
                 </ol>
+
+                <h3>Customization Tips</h3>
+                <ul>
+                    <li><strong>Organize Your Workflow</strong>: Put high-priority categories first, group related categories together</li>
+                    <li><strong>Adapt to Your Environment</strong>: Switch themes based on where you're working (bright office → light mode, dimly lit room → dark mode)</li>
+                    <li><strong>Editor Setup</strong>: Hide toolbar if you mostly read notes, keep it visible if you frequently format text</li>
+                    <li><strong>Consistent Organization</strong>: Maintain a logical category order that matches your mental model</li>
+                </ul>
             </section>
 
             <section id="faq">
@@ -1242,6 +1314,31 @@
                 <div class="faq-item">
                     <h4>Q: How do I recover deleted notes?</h4>
                     <p><strong>A:</strong> Use your most recent backup file with Restore (merge). No built-in trash bin currently.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Can I reorder my categories?</h4>
+                    <p><strong>A:</strong> Yes! In Manage Categories, use the Up (↑) and Down (↓) arrow buttons next to each category to rearrange them. The order is saved automatically.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Does QuickNote have a dark mode?</h4>
+                    <p><strong>A:</strong> Yes! Go to Settings (Menu → Settings...) and enable the Dark Mode switch. The entire app will switch to a dark theme with black backgrounds and white text. Your choice is saved.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Can I hide the editor toolbar by default?</h4>
+                    <p><strong>A:</strong> Yes! Go to Settings → Hide Toolbar and enable it. The toolbar will stay hidden when you open notes. You can still toggle it manually in the editor when needed.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Will my settings be saved when I close the app?</h4>
+                    <p><strong>A:</strong> Yes! All settings (Dark Mode, Hide Toolbar) are saved automatically and will be restored when you restart QuickNote.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Does dark mode save battery?</h4>
+                    <p><strong>A:</strong> Yes, on devices with OLED or AMOLED screens! Dark pixels consume less power, so using Dark Mode can extend battery life, especially with many notes open.</p>
                 </div>
 
                 <div class="faq-item">
